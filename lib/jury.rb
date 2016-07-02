@@ -18,7 +18,7 @@ class Jury
     end
     random_vote = Random.new
     @members.each do |member|
-      x =random_vote.rand(2)
+      x = random_vote.rand(2)
       votes[x][1] += 1
       puts "#{member.to_s}: #{votes[x][0].to_s}"
     end
