@@ -21,7 +21,7 @@ class Game
     @tribes.clear
   end
 
-  # Create one large Tribe from all remaining Contestants
+  # Create one new Tribe from all remaining Contestants
   def merge(new_name)
     all_members = []
     @tribes.each do |tribe|

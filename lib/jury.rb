@@ -15,37 +15,46 @@ class Jury
     @members = val
   end
 
-  def cast_votes(finalists)
-    # Create array to hold each finalist's votes
-    votes = []
+  def create_final_vote_array(finalists)
+    @votes = []
     finalists.each do |finalist|
-      votes << [finalist, 0]
+      @votes << [finalist, 0]
     end
+  end
 
-    # Each member randomly votes for one of the finalists
-    random_vote = Random.new
-    @members.each do |member|
-      x = random_vote.rand(2)
-      votes[x][1] += 1
-      puts "#{member.to_s.capitalize.white} casts a Final Jury vote for #{votes[x][0].to_s.capitalize.green}"
-    end
-
-    # Also store results in hash to satisfy tests
+  def create_results_hash
     vote_hash = {}
-    votes.each do |finalist, total|
+    @votes.each do |finalist, total|
       vote_hash[finalist] = total
     end
     vote_hash
   end
 
+  def place_random_votes
+    random_number = Random.new
+    @members.each do |jury_member|
+      chosen_finalist_index = random_number.rand(@votes.size)
+      @votes[chosen_finalist_index][1] += 1
+      puts "#{jury_member.to_s.capitalize.white} casts a vote for #{@votes[chosen_finalist_index][0].to_s.capitalize.green} to win!"
+    end
+  end
+
+  def cast_votes(finalists)
+    create_final_vote_array(finalists)
+    place_random_votes
+    create_results_hash
+  end
+
   def report_votes(results)
-    results.each {|finalist, vote_count| puts "#{finalist.to_s.capitalize}: #{vote_count} votes"}
+    results.each do |finalist, vote_count|
+      puts "#{finalist.to_s.capitalize}: #{vote_count} votes"
+    end
   end
 
   def announce_winner(results)
     results.each do |finalist, vote_count|
       if vote_count >= 4
-        puts "\nThe winner is... #{finalist.to_s.capitalize}!".green
+        puts "\nThe winner is... #{finalist.to_s.capitalize}!\n".green
         return finalist
       end
     end
