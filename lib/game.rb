@@ -9,7 +9,6 @@ class Game
 
   def add_tribe(tribe)
     @tribes << tribe
-    @tribes
   end
 
   # Choose a winning Tribe from the @tribes array
@@ -23,21 +22,15 @@ class Game
 
   # Create one new Tribe from all remaining Contestants
   def merge(new_name)
-    all_members = []
-    @tribes.each do |tribe|
-      tribe.members.each do |contestant|
-        all_members << contestant
-      end
-    end
+    combined_members = @tribes.map(&:members).flatten
     clear_tribes
-    merged_tribe = Tribe.new :name => new_name, :members => all_members
+    merged_tribe = Tribe.new :name => new_name, :members => combined_members
     add_tribe(merged_tribe)
     merged_tribe
   end
 
   # Choose an immunity-winning member from the remaining Tribes.
   def individual_immunity_challenge
-    x = Random.new
-    @tribes[x.rand(@tribes.size)].members.sample
+    @tribes.sample.members.sample
   end
 end

@@ -23,38 +23,27 @@ require_relative "jury"
 #This is where you will write your code for the three phases
 def phase_one
   puts "\n===  PHASE ONE BEGINS!  ===\n".white
-  phase_one_challenges = 0
   8.times do
-    winning_tribe = @borneo.immunity_challenge
-    winning_tribe.tribal_council
-    phase_one_challenges += 1
+    losing_tribe = @borneo.immunity_challenge
+    losing_tribe.tribal_council
   end
-  phase_one_challenges
-  # This method does not merge the tribes because that is done
-  #  explicitly in the provided game simulation code below.
 end
 
 def phase_two
   puts "\n===  PHASE TWO BEGINS!  ===\n".white
-  phase_two_challenges = 0
   3.times do
     winning_member = @borneo.individual_immunity_challenge
     @merge_tribe.tribal_council(:immune => winning_member)
-    phase_two_challenges += 1
   end
-  phase_two_challenges
 end
 
 def phase_three
   puts "\n=== PHASE THREE BEGINS! ===\n".white
-  phase_three_challenges = 0
   7.times do
     winning_member = @borneo.individual_immunity_challenge
     eliminated_member = @merge_tribe.tribal_council(:immune => winning_member)
     @jury.add_member(eliminated_member)
-    phase_three_challenges += 1
   end
-  phase_three_challenges
 end
 
 
