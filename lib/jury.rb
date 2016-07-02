@@ -20,7 +20,7 @@ class Jury
     @members.each do |member|
       x = random_vote.rand(2)
       votes[x][1] += 1
-      puts "#{member.to_s}: #{votes[x][0].to_s}"
+      puts "#{member.to_s.capitalize.white} casts a Final Jury vote for #{votes[x][0].to_s.capitalize.green}"
     end
     vote_hash = {}
     votes.each do |finalist, total|
@@ -33,7 +33,10 @@ class Jury
   end
   def announce_winner(results)
     results.each do |k, v|
-      return k if v >= 4
+      if v >= 4
+        puts "\nThe winner is... #{k.to_s.capitalize}!".green
+        return k
+      end
     end
   end
 end

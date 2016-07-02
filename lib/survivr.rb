@@ -1,3 +1,5 @@
+require 'colorizr'
+
 require_relative "game"
 require_relative "tribe"
 require_relative "contestant"
@@ -20,6 +22,7 @@ require_relative "jury"
 
 #This is where you will write your code for the three phases
 def phase_one
+  puts "\n===  PHASE ONE BEGINS!  ===\n".white
   phase_one_challenges = 0
   8.times do
     winning_tribe = @borneo.immunity_challenge
@@ -27,9 +30,12 @@ def phase_one
     phase_one_challenges += 1
   end
   phase_one_challenges
+  # This method does not merge the tribes because that is done
+  #  explicitly in the provided game simulation code below.
 end
 
 def phase_two
+  puts "\n===  PHASE TWO BEGINS!  ===\n".white
   phase_two_challenges = 0
   3.times do
     winning_member = @borneo.individual_immunity_challenge
@@ -40,6 +46,7 @@ def phase_two
 end
 
 def phase_three
+  puts "\n=== PHASE THREE BEGINS! ===\n".white
   phase_three_challenges = 0
   7.times do
     winning_member = @borneo.individual_immunity_challenge

@@ -1,9 +1,14 @@
+require 'colorizr'
+
 class Tribe
   attr_reader :name, :members
   def initialize(options = {})
     @name = options[:name]
     @members = options[:members]
-    puts @name
+    announce_tribe
+  end
+  def announce_tribe
+    puts "\nThe #{@name.capitalize} Tribe has been formed.".yellow
   end
   def to_s
     @name
@@ -17,6 +22,7 @@ class Tribe
         council_has_spoken = true
       end
     end
+    puts "#{chopping_block.to_s.capitalize.red} has been voted out."
     return chopping_block
   end
 end
