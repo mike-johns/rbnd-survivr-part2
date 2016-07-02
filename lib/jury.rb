@@ -1,4 +1,6 @@
 class Jury
+  attr_accessor :members
+
   def initialize
     @members = []
   end
@@ -7,42 +9,15 @@ class Jury
     @members << contestant
   end
 
-  def members
-    @members
-  end
-
-  def members=(val)
-    @members = val
-  end
-
-  def create_final_vote_array(finalists)
-    @votes = []
-    finalists.each do |finalist|
-      @votes << [finalist, 0]
-    end
-  end
-
-  def create_results_hash
-    vote_hash = {}
-    @votes.each do |finalist, total|
-      vote_hash[finalist] = total
-    end
-    vote_hash
-  end
-
-  def place_random_votes
-    random_number = Random.new
-    @members.each do |jury_member|
-      chosen_finalist_index = random_number.rand(@votes.size)
-      @votes[chosen_finalist_index][1] += 1
-      puts "#{jury_member.to_s.capitalize.white} casts a vote for #{@votes[chosen_finalist_index][0].to_s.capitalize.green} to win!"
-    end
-  end
-
   def cast_votes(finalists)
-    create_final_vote_array(finalists)
-    place_random_votes
-    create_results_hash
+    votes = Hash.new
+    finalists.each { |finalist| votes[finalist] = 0 }
+    @members.each do |member|
+      vote = finalists.sample
+      puts "#{member.to_s.capitalize.white} casts a vote for #{vote.to_s.capitalize.green} to win!"
+      votes[vote] += 1
+    end
+    votes
   end
 
   def report_votes(results)
@@ -52,11 +27,8 @@ class Jury
   end
 
   def announce_winner(results)
-    results.each do |finalist, vote_count|
-      if vote_count >= 4
-        puts "\nThe winner is... #{finalist.to_s.capitalize}!\n".green
-        return finalist
-      end
-    end
+    winner = results.max_by { |k, v| v }[0]
+    puts "\nThe winner is... #{winner.to_s.capitalize}!\n".green
+    winner
   end
 end

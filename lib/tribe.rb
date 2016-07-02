@@ -22,15 +22,8 @@ class Tribe
   end
 
   def tribal_council(options = {})
-    council_has_spoken = false
-    while council_has_spoken == false do
-      chosen_member = @members.sample
-      if chosen_member != options[:immune]
-        @members.delete(chosen_member)
-        council_has_spoken = true
-      end
-    end
+    chosen_member = @members.reject{ |member| member == options[:immune] }.sample
     announce_member_voted_out(chosen_member)
-    return chosen_member
+    @members.delete(chosen_member)
   end
 end
