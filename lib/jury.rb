@@ -12,15 +12,24 @@ class Jury
     @members = val
   end
   def cast_votes(finalists)
-    vote_hash = {}
+    votes = []
     finalists.each do |finalist|
-      vote_hash[finalist] = 3.5
+      votes << [finalist, 0]
     end
-    @members.each {|member| puts member.to_s}
+    random_vote = Random.new
+    @members.each do |member|
+      x =random_vote.rand(2)
+      votes[x][1] += 1
+      puts "#{member.to_s}: #{votes[x][0].to_s}"
+    end
+    vote_hash = {}
+    votes.each do |finalist, total|
+      vote_hash[finalist] = total
+    end
     vote_hash
   end
   def report_votes(results)
-    results.each {|k, v| puts "#{k.to_s}: #{v}"}
+    results.each {|k, v| puts "#{k.to_s}: #{v} votes"}
   end
   def announce_winner(results)
     results.each do |k, v|
